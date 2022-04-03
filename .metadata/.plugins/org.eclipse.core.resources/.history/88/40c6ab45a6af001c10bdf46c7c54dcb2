@@ -1,0 +1,42 @@
+package com.codingdojo.doctors.validator;
+
+import org.springframework.stereotype.Component;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
+
+import com.codingdojo.doctors.models.User;
+import com.codingdojo.doctors.repositories.UserRepository;
+
+@Component
+public class UserValidator implements Validator {
+	
+	private final UserRepository userRepo;
+	
+    
+    public UserValidator(UserRepository userRepo) {
+		this.userRepo = userRepo;
+	}
+
+	//    1
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return User.class.equals(clazz);
+    }
+    
+    // 2
+    @Override
+    public void validate(Object object, Errors errors) {
+        User user = (User) object;
+//        User emaiLUser = userRepo.findByEmail(user.getEmail());
+//        
+        if (!user.getPasswordConfirmation().equals(user.getPassword())) {
+            // 3
+            errors.rejectValue("passwordConfirmation", "Match");
+        } 
+//        if (emailUser != null) {
+//            // 3
+//            errors.rejectValue("email", "Exist");
+//        } 
+//        Exist.user.email=Email already exists
+    }
+}

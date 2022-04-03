@@ -1,0 +1,5 @@
+package com.codingdojo.doctors.models;
+
+public class User {
+
+}
